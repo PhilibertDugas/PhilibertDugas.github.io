@@ -1,6 +1,5 @@
 .profile {
-  text-align: center;
-  padding-top: 100px;
+  border-right: 1px solid #eee;
 }
 
 .profile #avatar {
@@ -15,12 +14,25 @@ ul#social i {
   font-size: 4vw;
 }
 
+h1 {
+  font-size: 4.0rem;
+}
+
+h2 {
+  color: #aaa;
+  font-size: 3.0rem;
+}
+
+li {
+  list-style: none;
+}
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 500px) {
   ul#social i {
-    font-size: 10vw;
+    font-size: 5vw;
   }
 
   .profile #avatar {
-    width: 200px;
+    width: 100px;
   }
 }

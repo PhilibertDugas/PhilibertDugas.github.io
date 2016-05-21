@@ -1,2 +1,4 @@
 title: Philibert's website
 exclude: [vendor]
+gems:
+  - jekyll-seo-tag

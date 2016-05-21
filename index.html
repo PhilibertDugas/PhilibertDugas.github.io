@@ -1,15 +1,12 @@
 ---
-layout: default
+layout: info
 ---
-
-<div class="profile">
-  <img id="avatar" src="/static/images/phili.png" alt="avatar"/>
-  <ul id="social">
-    <li>
-      <a href="https://ca.linkedin.com/in/philibertdugas" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
-    </li>
-    <li>
-      <a href="https://github.com/PhilibertDugas" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
-    </li>
-  </ul>
-</div>
+<ul>
+  {% for post in site.posts %}
+  <li>
+    <a href="{{ post.url }}">
+      <h1>{{ post.title }}</h1>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
