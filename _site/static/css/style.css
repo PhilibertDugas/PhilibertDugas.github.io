@@ -1,5 +1,5 @@
-.profile {
-  border-right: 1px solid #eee;
+.content li {
+  border-bottom: 1px solid #eee
 }
 
 .profile #avatar {
@@ -11,7 +11,7 @@ ul#social li {
 }
 
 ul#social i {
-  font-size: 4vw;
+  font-size: 2vw;
 }
 
 h1 {
