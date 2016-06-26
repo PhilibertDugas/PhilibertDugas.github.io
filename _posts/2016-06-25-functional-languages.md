@@ -3,6 +3,8 @@ layout: post
 ---
 ## Elixir: My introduction into functional programming
 
+*25th June 2016*
+
 My first exposure to web development was during a summer internship back when I was in college. At the time, I was using PHP, JQuery, HTML, CSS, nothing too extravagant. The fall semester that followed, I took a web class. I thought it would be a ride through, that is until we started to use [Yesod](http://www.yesodweb.com) for the class. A web framework built in [Haskell](https://www.haskell.org). It was my first time programming in a functional language: brutal. Back then, I thought I’d never be able to learn functional programming. I felt it was so different than anything I had ever done. `for` loops? Nope. Side effect? Can't do that either.
 
 Still, functional programming always intrigued me, I tried around a year ago to pick up [Scala](http://www.scala-lang.org/). I felt it was much more approachable than Haskell, but still not for me. Recently [Elixir](http://elixir-lang.org) came under my radar. Elixir is a functional language built on top of the [Erlang](https://www.erlang.org/) VM, which has many similarities to Ruby. I feel like Elixir is the perfect opportunity for me to dive back into functional programming. It's similarity with Ruby, the language I use the most these days, makes it a great candidate for me to learn it.

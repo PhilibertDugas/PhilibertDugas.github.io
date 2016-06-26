@@ -4,8 +4,9 @@ layout: info
 <ul>
   {% for post in site.posts %}
   <li>
-    <a href="{{ post.url }}">
+    <a class="post-link" href="{{ post.url }}">
       <h2>{{ post.excerpt }}</h2>
+      <span class="dates">{{ post.date | date: '%-d %b %Y' }}</span>
     </a>
   </li>
   {% endfor %}

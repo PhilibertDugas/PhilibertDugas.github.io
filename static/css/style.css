@@ -1,5 +1,14 @@
 .dates {
-  float: right;
+ color: gray;
+ size: 1.2em;
+}
+
+.post-link {
+  text-decoration: none;
+}
+
+.post-link h2 {
+  margin-bottom: 0.5em;
 }
 
 .content li {
