@@ -30,4 +30,4 @@ The pipe operator takes the output from the left side and passes it along as an 
 #### What's next
 I’m planning to write a few projects using Elixir and Phoenix since I want to dive deep into this. I’ll try to write a blog post per week about my progress. To conclude this first blog post, I want to give a shout out to [Simple Programmer](http://simpleprogrammer.com) which helped me kicking off this blog. If anyone is into blogging, I’d recommend checking John Sonmez content, it's really good! Specifically, I took the blogging course. It's a free ~3 week class which helps you kick off your blog and give you insights about getting traffic and marketing yourself. Proudly displaying the badge here since I just completed the class.
 
-<a alt="blogging badge" href="http://simpleprogrammer.com/2015/03/02/my-free-blogging-course-is-getting-unbelievable-results/"><img src="http://simpleprogrammer.com/wp-content/uploads/2015/04/badge.png"></a>
+<a href="http://simpleprogrammer.com/2015/03/02/my-free-blogging-course-is-getting-unbelievable-results/"><img src="http://simpleprogrammer.com/wp-content/uploads/2015/04/badge.png" alt="blogging badge"></a>
