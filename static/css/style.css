@@ -3,7 +3,7 @@
 }
 
 .profile #avatar {
-  width: 80px;
+  width: 120px;
 }
 
 ul#social li {
@@ -11,7 +11,7 @@ ul#social li {
 }
 
 ul#social i {
-  font-size: 2vw;
+  font-size: 40px;
 }
 
 h1 {

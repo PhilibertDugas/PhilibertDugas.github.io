@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Functional Languages - Philibert&#8217;s website</title>
+<meta property="og:title" content="Functional Languages" />
+<meta name="description" content="Elixir: My introduction into functional programming" />
+<meta property="og:description" content="Elixir: My introduction into functional programming" />
+<meta property="og:site_name" content="Philibert’s website" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-06-25T00:00:00-04:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Functional Languages",
+    "datePublished": "2016-06-25T00:00:00-04:00",
+    "description": "Elixir: My introduction into functional programming",
+    "url": "/2016/06/25/functional-languages.html"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Philibert Dugas, Philibertd">
+    <meta name="author" content="Philibert Dugas">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/static/css/skeleton.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76867217-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+  <div class="row">
+    <div class="profile three columns">
+      <a href="/index.html"><img id="avatar" src="/static/images/phili.png" alt="avatar"/></a>
+      <ul id="social">
+        <li>
+          <a href="https://ca.linkedin.com/in/philibertdugas" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+        </li>
+        <li>
+          <a href="https://github.com/PhilibertDugas" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+        </li>
+        <li>
+          <a href="https://twitter.com/DugasPhilibert" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+      <h2>Philibert Dugas</h2>
+      <h5>Developer @Shopify, software enthusiast</h5>
+    </div>
+    <div class="nine columns content">
+      <article>
+  <h2 id="elixir-my-introduction-into-functional-programming">Elixir: My introduction into functional programming</h2>
+
+<p>My first exposure to web development was during a summer internship back when I was in college. At the time, I was using PHP, JQuery, HTML, CSS, nothing too extravagant. The fall semester that followed, I took a web class. I thought it would be a ride through, that is until we started to use <a href="http://www.yesodweb.com">Yesod</a> for the class. A web framework built in <a href="https://www.haskell.org">Haskell</a>. It was my first time programming in a functional language: brutal. Back then, I thought I’d never be able to learn functional programming. I felt it was so different than anything I had ever done. <code class="highlighter-rouge">for</code> loops? Nope. Side effect? Can’t do that either.</p>
+
+<p>Still, functional programming always intrigued me, I tried around a year ago to pick up <a href="http://www.scala-lang.org/">Scala</a>. I felt it was much more approachable than Haskell, but still not for me. Recently <a href="http://elixir-lang.org">Elixir</a> came under my radar. Elixir is a functional language built on top of the <a href="https://www.erlang.org/">Erlang</a> VM, which has many similarities to Ruby. I feel like Elixir is the perfect opportunity for me to dive back into functional programming. It’s similarity with Ruby, the language I use the most these days, makes it a great candidate for me to learn it.</p>
+
+<p>So far, I think the language is amazing. It combines Ruby expressiveness and Erlang stability. The functional aspect that felt so intimidating back then feels now like hours of fun.</p>
+
+<h4 id="pipe-operator">Pipe operator</h4>
+
+<p>I got to say the pipe operator is a cool aspect of the language. If you’re familiar with the Unix pipe operator, you’ll be right at home. Using the example taken from the <a href="http://elixir-lang.org/getting-started/enumerables-and-streams.html#the-pipe-operator">Getting Started Guide</a>, a chain of function call would look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iex&gt; Enum.sum(Enum.filter(Enum.map(1..100_000, &amp;(&amp;1 * 3)), odd?))
+7500000000
+</code></pre>
+</div>
+
+<p>Not too friendly to read uh? First, we’re creating a range of numbers with <code class="highlighter-rouge">1..100_000</code>. Next, we’re passing it through <code class="highlighter-rouge">Enum.map</code> giving it a method <code class="highlighter-rouge">&amp;(&amp;1 * 3)</code>. In this case <code class="highlighter-rouge">&amp;1</code> is the first argument passed to the function. This would multiply every number in the range by 3. We pass in this result to the <code class="highlighter-rouge">Enum.filter</code> method along with the <code class="highlighter-rouge">odd?</code> function, which filters out every even numbers. Finally we sum the result of the resulted range, giving a final result of <code class="highlighter-rouge">7500000000</code>. I find all this function nesting quite hard to read, let’s see how the pipe operator helps:</p>
+
+<figure class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="m">1</span><span class="o">..</span><span class="m">100_000</span> <span class="o">|&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span> <span class="o">*</span> <span class="m">3</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">odd?</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">sum</span>
+<span class="m">7500000000</span></code></pre></figure>
+
+<p>The pipe operator takes the output from the left side and passes it along as an argument to the right side. Comparing this line of code with the other one above, I feel it’s much more expressive. It represents the flow of data in a more concise way. Functions play such a big role in functional programming. I think having an operator like this one is brilliant and will contribute to much cleaner code.</p>
+
+<h4 id="whats-next">What’s next</h4>
+<p>I’m planning to write a few projects using Elixir and Phoenix since I want to dive deep into this. I’ll try to write a blog post per week about my progress. To conclude this first blog post, I want to give a shout out to <a href="http://simpleprogrammer.com">Simple Programmer</a> which helped me kicking off this blog. If anyone is into blogging, I’d recommend checking John Sonmez content, it’s really good!</p>
+
+</article>
+
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>
