@@ -52,7 +52,7 @@ iex> HTTPSender.send_request("http://philibertd.com", pid)
 200
 ```
 
-So we see some improvements here. We received the `AsyncHeaders` and it printed out the status code value. Problem is, we didn't handle the `AsyncChunk` and `AsyncEnd`. Turns out that a `Task` will execute it's function and stop afterwards. Since the response is sent in 3 different messages, we want to loop until we receive the `AsyncEnd` message.
+So we see some improvements here. We received the `AsyncHeaders` and it printed out the status code value. Problem is, we didn't handle the `AsyncChunk` and `AsyncEnd`. Turns out that a `Task` will execute the function and stop afterwards. Since the response is sent in 3 different messages, we want to loop until we receive the `AsyncEnd` message.
 
 The final iteration looks like this:
 
