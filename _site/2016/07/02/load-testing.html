@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Load Testing - Philibert&#8217;s website</title>
+<meta property="og:title" content="Load Testing" />
+<meta name="description" content="Elt, elixir load testing" />
+<meta property="og:description" content="Elt, elixir load testing" />
+<meta property="og:site_name" content="Philibert’s website" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-07-02T00:00:00-04:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Load Testing",
+    "datePublished": "2016-07-02T00:00:00-04:00",
+    "description": "Elt, elixir load testing",
+    "url": "/2016/07/02/load-testing.html"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Philibert Dugas, Philibertd">
+    <meta name="author" content="Philibert Dugas">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/static/css/skeleton.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76867217-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+  <div class="row">
+    <div class="profile three columns">
+      <a href="/"><img id="avatar" src="/static/images/phili.png" alt="avatar"/></a>
+      <ul id="social">
+        <li>
+          <a href="https://ca.linkedin.com/in/philibertdugas" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+        </li>
+        <li>
+          <a href="https://github.com/PhilibertDugas" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+        </li>
+        <li>
+          <a href="https://twitter.com/DugasPhilibert" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+      <h2>Philibert Dugas</h2>
+      <h6>Developer <a href="https://www.shopify.ca/">@Shopify</a>, software enthusiast</h6>
+    </div>
+    <div class="nine columns content">
+      <article>
+  <h2 id="elt-elixir-load-testing">Elt, elixir load testing</h2>
+
+<p><em>2nd July 2016</em></p>
+
+<p>Back in late 2015, I came across this code review assigned to me. Over 500 lines of XML code written by a colleague QA at the time, a JMeter load testing scenario.
+No way I could understand everything going on in there, so I decided I’d try this scenario on my local machine.</p>
+
+<p>Checkout the branch, kick off the JMeter repulsive GUI, start the test. Computer crashed in around 30 seconds.
+There were two main problems with this. First, the scenario itself was hard to review because of the XML syntax.
+Second, it was difficult to run the scenario locally as the JMeter would take too much resources on the computer.</p>
+
+<p>That’s when I started creating <a href="https://github.com/dudang/golt">Golt</a>. It’s purpose was to fix those two problems specifically.
+The test scenarios are in YAML or JSON format, which is much more reviewable.
+The program itself uses Go to leverage it’s lightweight threading system.
+I found this to be a great project to learn Go. Not a trivial application, but nothing too complex neither. While I never got to use Golt back at work, I enjoyed the learning process.</p>
+
+<p>I decided I want to do the same thing with Elixir. Writing a load tester which uses YAML or JSON as an input. When I read the following lines in the Elixir getting started’s guide, it convinced me even more:</p>
+
+<blockquote>
+  <p><em>Elixir’s processes should not be confused with operating system processes. Processes in Elixir are extremely lightweight in terms of memory and CPU (unlike threads in many other programming languages). Because of this, it is not uncommon to have tens or even hundreds of thousands of processes running simultaneously.</em></p>
+</blockquote>
+
+<p>So here I go. The first step this week was to send HTTP requests without worrying about parsing YAML or JSON. While searching about how to send HTTP requests in Elixir, I found <a href="https://github.com/myfreeweb/httpotion">HTTPotion</a>. This client interesting as it supported asynchronous requests out of the box. I decided to build a module around it to see how it goes.</p>
+
+<noscript><pre>400: Invalid request
+</pre></noscript>
+<script src="https://gist.github.com/c22881b7a07038b2ccacadff357f06c1.js"> </script>
+
+<p>This module serves provides two functions. The first one sends a request and streams it’s result to a receiver process. The second one boots a receiver process and returns it’s PID. This first iteration turned out to be wrong:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iex&gt; {:ok, pid} = HTTPSender.receive_request
+{:ok, #PID&lt;0.134.0&gt;}
+
+iex&gt; HTTPSender.send_request("http://philibertd.com", pid)
+%HTTPotion.AsyncResponse{id: -576460752303423304}
+** (EXIT from #PID&lt;0.159.0&gt;) an exception was raised:
+    ** (KeyError) key :to_string not found in: %HTTPotion.AsyncHeaders
+</code></pre>
+</div>
+
+<p>Right, so I can’t cast the <code class="highlighter-rouge">AsyncHeaders</code> struct to string. Let’s adjust this and match the documented structs:</p>
+
+<noscript><pre>400: Invalid request
+</pre></noscript>
+<script src="https://gist.github.com/b453845c928864495185d04325ec7d5b.js"> </script>
+
+<p>Here, I’m using using pattern matching to extract the information I want. In this case, the status code from the headers and the chunk content. The second try went this way:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iex&gt; {:ok, pid} = HTTPSender.receive_request
+{:ok, #PID&lt;0.134.0&gt;}
+
+iex&gt; HTTPSender.send_request("http://philibertd.com", pid)
+%HTTPotion.AsyncResponse{id: -576460752303423304}
+200
+</code></pre>
+</div>
+
+<p>So we see some improvements here. We received the <code class="highlighter-rouge">AsyncHeaders</code> and it printed out the status code value. Problem is, we didn’t handle the <code class="highlighter-rouge">AsyncChunk</code> and <code class="highlighter-rouge">AsyncEnd</code>. Turns out that a <code class="highlighter-rouge">Task</code> will execute it’s function and stop afterwards. Since the response is sent in 3 different messages, we want to loop until we receive the <code class="highlighter-rouge">AsyncEnd</code> message.</p>
+
+<p>The final iteration looks like this:</p>
+
+<noscript><pre>400: Invalid request
+</pre></noscript>
+<script src="https://gist.github.com/06a381853f4fa4e552296865a065dc45.js"> </script>
+
+<p>In this example, we introduced a new private function <code class="highlighter-rouge">loop</code>. This function starts by receiving the messages from the http response. It then loops until it receives the <code class="highlighter-rouge">AsyncEnd</code> message at which points it stops. Since we’re doing functional programming, looping is actually recursion! Note that our public method now doesn’t define the logic in it’s <code class="highlighter-rouge">Task.start_link</code>. It delegates to <code class="highlighter-rouge">loop</code> which is cleaner in my opinion:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iex&gt; {:ok, pid} = HTTPSender.receive_request
+{:ok, #PID<span class="nt">&lt;0</span><span class="err">.</span><span class="na">134</span><span class="err">.</span><span class="na">0</span><span class="nt">&gt;</span>}
+
+iex&gt; HTTPSender.send_request("http://philibertd.com", pid)
+%HTTPotion.AsyncResponse{id: -576460752303423487}
+200
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="c">&lt;!-- Begin Jekyll SEO tag v2.0.0 --&gt;</span>
+<span class="nt">&lt;title&gt;</span>Philibert’s website<span class="nt">&lt;/title&gt;</span>
+........
+end
+</code></pre>
+</div>
+
+<p>We send the request out and are able to match all 3 messages! To make the output more readable, I trimmed down the chunk of the response. Now that we are able to send asynchronous http requests, the next step is to build a test plan and parse it. I’ll be doing this in the next post!</p>
+
+</article>
+
+<p>You can find me on Twitter <a href="https://twitter.com/DugasPhilibert">@DugasPhilibert</a></p>
+
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>
