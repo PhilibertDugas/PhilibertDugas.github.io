@@ -1,7 +1,7 @@
 ---
 layout: post
 ---
-## Elt, elixir load testing
+## Elt, Elixir load testing
 
 *2nd July 2016*
 
