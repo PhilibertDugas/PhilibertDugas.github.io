@@ -3,7 +3,7 @@ layout: post
 ---
 ## Elixir: My introduction into functional programming
 
-*25th June 2016*
+*June 25th, 2016*
 
 My first exposure to web development was during a summer internship back when I was in college. At the time, I was using PHP, JQuery, HTML, CSS, nothing too extravagant. The fall semester that followed, I took a web class. I thought it would be a ride through, that is until we started to use [Yesod](http://www.yesodweb.com) for the class. A web framework built in [Haskell](https://www.haskell.org). It was my first time programming in a functional language: brutal. Back then, I thought I’d never be able to learn functional programming. I felt it was so different than anything I had ever done. `for` loops? Nope. Side effect? Can't do that either.
 

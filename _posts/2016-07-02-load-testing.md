@@ -3,7 +3,7 @@ layout: post
 ---
 ## Elt, Elixir load testing
 
-*2nd July 2016*
+*July 2nd, 2016*
 
 Back in late 2015, I came across this code review assigned to me. Over 500 lines of XML code written by a colleague QA at the time, a JMeter load testing scenario.
 No way I could understand everything going on in there, so I decided I'd try this scenario on my local machine.
