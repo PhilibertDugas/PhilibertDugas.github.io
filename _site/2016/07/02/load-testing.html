@@ -4,8 +4,8 @@
     <!-- Begin Jekyll SEO tag v2.0.0 -->
 <title>Load Testing - Philibert&#8217;s website</title>
 <meta property="og:title" content="Load Testing" />
-<meta name="description" content="Elt, elixir load testing" />
-<meta property="og:description" content="Elt, elixir load testing" />
+<meta name="description" content="Elt, Elixir load testing" />
+<meta property="og:description" content="Elt, Elixir load testing" />
 <meta property="og:site_name" content="Philibert’s website" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2016-07-02T00:00:00-04:00" />
@@ -15,7 +15,7 @@
     "@type": "BlogPosting",
     "headline": "Load Testing",
     "datePublished": "2016-07-02T00:00:00-04:00",
-    "description": "Elt, elixir load testing",
+    "description": "Elt, Elixir load testing",
     "url": "/2016/07/02/load-testing.html"
   }
 </script>
@@ -60,9 +60,9 @@
     </div>
     <div class="nine columns content">
       <article>
-  <h2 id="elt-elixir-load-testing">Elt, elixir load testing</h2>
+  <h2 id="elt-elixir-load-testing">Elt, Elixir load testing</h2>
 
-<p><em>2nd July 2016</em></p>
+<p><em>July 2nd, 2016</em></p>
 
 <p>Back in late 2015, I came across this code review assigned to me. Over 500 lines of XML code written by a colleague QA at the time, a JMeter load testing scenario.
 No way I could understand everything going on in there, so I decided I’d try this scenario on my local machine.</p>
@@ -117,7 +117,7 @@ iex&gt; HTTPSender.send_request("http://philibertd.com", pid)
 </code></pre>
 </div>
 
-<p>So we see some improvements here. We received the <code class="highlighter-rouge">AsyncHeaders</code> and it printed out the status code value. Problem is, we didn’t handle the <code class="highlighter-rouge">AsyncChunk</code> and <code class="highlighter-rouge">AsyncEnd</code>. Turns out that a <code class="highlighter-rouge">Task</code> will execute it’s function and stop afterwards. Since the response is sent in 3 different messages, we want to loop until we receive the <code class="highlighter-rouge">AsyncEnd</code> message.</p>
+<p>So we see some improvements here. We received the <code class="highlighter-rouge">AsyncHeaders</code> and it printed out the status code value. Problem is, we didn’t handle the <code class="highlighter-rouge">AsyncChunk</code> and <code class="highlighter-rouge">AsyncEnd</code>. Turns out that a <code class="highlighter-rouge">Task</code> will execute the function and stop afterwards. Since the response is sent in 3 different messages, we want to loop until we receive the <code class="highlighter-rouge">AsyncEnd</code> message.</p>
 
 <p>The final iteration looks like this:</p>
 
