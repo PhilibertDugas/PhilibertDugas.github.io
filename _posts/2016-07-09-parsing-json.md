@@ -12,7 +12,7 @@ First, I need to read the file. Once I have it's content, I want to parse the JS
 
 {% gist 1df360053e0a3cba5643ecf5516cdc86 %}
 
-So we have a module `Runner` which will be acting as the entry point for our program. For now, `get_struct` is a function which reads the file "elt-test.json". It then transform the content into the `Elt` struct defined [here](https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/lib/elt.ex). Nothing too tricky. Now I want to start launching the threads. Each of these threads will launch their own series of requests.
+So we have a module `Runner` which will be acting as the entry point for our program. The new function `get_struct` reads the file "elt-test.json". It then transform the content into the `Elt` struct defined [here](https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/lib/elt.ex). Nothing too tricky. Time to start launching the threads. Each of these threads will launch their own series of requests.
 
 #### Launching Threads
 
@@ -24,7 +24,7 @@ I have my thread group structure ready to get kicked off. The function `launch_t
 
 Now, I have 10 threads to start. In an imperative language, I could loop 10 times and start background threads. In this context, I will use recursion 10 times. Using the `case` statement, I can inspect the value of `threads`. If it's at 0, my loop is finished and I can output a message to the console. For other values, I'm starting a `Task` using [HTTPSender](http://philibertd.com/2016/07/02/load-testing.html) defined in last week's post. We see here, `launch_request` is not currently implemented. It will be in the next iteration so no need to worry about for now.
 
-Time to launch the following threads. I'm calling the same method, decrementing `threads` value by 1 to not loop infinitely. Note the syntax, `%{ param | "threads" => threads - 1}`. This creates a new map, having all of `param` values except for `"threads"`.
+Back to launching the following threads. I'm calling the same method, decrementing `threads` value by 1 to avoid looping infinitely. Note the syntax, `%{ param | "threads" => threads - 1}`. This creates a new map, having all of `param` values except for `"threads"`.
 
 #### Launching Requests
 
@@ -82,9 +82,10 @@ end
 end
 end
 end
+.........
 {% endhighlight %}
 
-The output is quite clear. First it finishes booting all the threads. Then it finishes sending all the requests. Since they are asynchronous, we don't get the result right away. Once the requests are done, we start receiving the `AsyncHeader`, `AsyncChunk`, and `AsyncEnd` structs from HTTPotion. Some requests seem a bit slower then others. Note the `AsyncHeader` that arrived after 3 `AsyncChunk`. With a longer running test (more requests), we would probably see much more of them.
+The output is quite clear. First it finishes booting all the threads. Then it finishes sending all the requests. Since they are asynchronous, we don't get the result right away. Once the requests are done, we start receiving the `AsyncHeader`, `AsyncChunk`, and `AsyncEnd` structs from HTTPotion. Some requests seem a bit slower then others. Note the `AsyncHeader` that arrived after 3 `AsyncChunk`. With a longer running test (more requests), we would probably see much more of them. I trimmed down the output to the first 10 requests. This output keeps going for all 30 requests.
 
 #### Conclusion
 
