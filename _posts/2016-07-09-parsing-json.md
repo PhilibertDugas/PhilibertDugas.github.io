@@ -85,8 +85,8 @@ end
 .........
 {% endhighlight %}
 
-The output is quite clear. First it finishes booting all the threads. Then it finishes sending all the requests. Since they are asynchronous, we don't get the result right away. Once the requests are done, we start receiving the `AsyncHeader`, `AsyncChunk`, and `AsyncEnd` structs from HTTPotion. Some requests seem a bit slower then others. Note the `AsyncHeader` that arrived after 3 `AsyncChunk`. With a longer running test (more requests), we would probably see much more of them. I trimmed down the output to the first 10 requests to maintain readability. In your own console, you would see this output keeps going for all 30 requests.
+The output is super interesting. First it finishes booting all the threads. Then it finishes sending all the requests. Since they are asynchronous, we don't get the result right away. Once the requests are done, we start receiving the `AsyncHeader`, `AsyncChunk`, and `AsyncEnd` structs from HTTPotion. Some requests seem a bit slower then others. Note the `AsyncHeader` that arrived after 3 `AsyncChunk`. With a longer running test (more requests), we would probably see much more of them. I trimmed down the output to the first 10 requests to maintain readability. In your own console, you would see this output keeps going for all 30 requests.
 
 #### Conclusion
 
-This first step was for the simplest scenario. Still, I'm super impressed by the power of Elixir. In around 33 lines of code, we can get a command line load testing tool. Elt is very limited, in the upcoming weeks I plan to keep exploring and learning Elixir through this project. One thing I want to approach soon is Elixir testing, logging and eventually the [Phoenix framework](http://www.phoenixframework.org/).
+This first step was for the simplest scenario. Still, I'm super impressed by the power of Elixir. In around 33 lines of code, we can get a command line load testing tool. While Elt is still limited, I plan to keep exploring and learning Elixir through this project. One thing I want to approach soon is Elixir testing, logging and eventually the [Phoenix framework](http://www.phoenixframework.org/).
