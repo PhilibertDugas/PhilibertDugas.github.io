@@ -8,10 +8,9 @@
 <script type="application/ld+json">
   {
     "@context": "http://schema.org",
-    "@type": "WebSite",
-    "name": "Philibert’s website",
+    "@type": "WebPage",
     "headline": "Philibert’s website",
-    "url": "/"
+    "url": "/2016-07-10-parsing-json.html"
   }
 </script>
 <!-- End Jekyll SEO tag -->
@@ -54,51 +53,23 @@
       <h6>Developer <a href="https://www.shopify.ca/">@Shopify</a>, software enthusiast</h6>
     </div>
     <div class="nine columns content">
-      <ul>
-  
-  <li>
-    <a class="post-link" href="/2016/07/09/parsing-json.html">
-      <h2><h2 id="parsing-json-and-sending-requests">Parsing JSON and sending requests</h2>
+      <article>
+  <h2 id="parsing-json-and-sending-requests">Parsing JSON and sending requests</h2>
 
-</h2>
-      <span class="dates">
-        
-        July
-        9th,
-        2016
-      </span>
-    </a>
-  </li>
-  
-  <li>
-    <a class="post-link" href="/2016/07/02/load-testing.html">
-      <h2><h2 id="elt-elixir-load-testing">Elt, Elixir load testing</h2>
+<p><em>July 10th, 2016</em></p>
 
-</h2>
-      <span class="dates">
-        
-        July
-        2nd,
-        2016
-      </span>
-    </a>
-  </li>
-  
-  <li>
-    <a class="post-link" href="/2016/06/25/functional-languages.html">
-      <h2><h2 id="elixir-my-introduction-into-functional-programming">Elixir: My introduction into functional programming</h2>
+<p>This week I focused on getting a minimal test plan defined in JSON and executing it. Defining the plan wasn’t too hard, I took a trimmed down version of <a href="https://github.com/dudang/golt/blob/master/test/golt-test.json">Golt’s plan</a>. The light version looks like <a href="https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/elt-test.json">this</a>. This test will start 10 threads. Each of them will execute 3 GET requests to my blog. Simple enough, let the hacking begin.</p>
 
-</h2>
-      <span class="dates">
-        
-        June
-        25th,
-        2016
-      </span>
-    </a>
-  </li>
-  
-</ul>
+<p>First of, I need to read the file. Once I have it’s content, I want to parse the JSON into a struct. Not going to implement my own JSON parser, <a href="https://github.com/devinus/poison">Poison</a> is the library I’m using to do that.</p>
+
+<noscript><pre>400: Invalid request
+</pre></noscript>
+<script src="https://gist.github.com/1df360053e0a3cba5643ecf5516cdc86.js"> </script>
+
+
+</article>
+
+<p>You can find me on Twitter <a href="https://twitter.com/DugasPhilibert">@DugasPhilibert</a></p>
 
     </div>
   </div>
