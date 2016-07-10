@@ -12,13 +12,19 @@ First, I need to read the file. Once I have it's content, I want to parse the JS
 
 {% gist 1df360053e0a3cba5643ecf5516cdc86 %}
 
-So we have a module `Runner` which will be acting as the entry point for our program. For now, `get_struct` is a function which reads the file "elt-test.json". It then transform the content into the `Elt` struct defined [here](https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/lib/elt.ex). So far, nothing too tricky. Now I want to start launching the threads. Each of these threads will launch their own series of requests.
+So we have a module `Runner` which will be acting as the entry point for our program. For now, `get_struct` is a function which reads the file "elt-test.json". It then transform the content into the `Elt` struct defined [here](https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/lib/elt.ex). Nothing too tricky. Now I want to start launching the threads. Each of these threads will launch their own series of requests.
 
 #### Launching Threads
 
 {% gist badb971bd3d87978f7e7a4d390566d35 %}
 
-We introduced quite a lot of code here, let's go through it. Right now, I only want to worry about the first element of the `Elt` list. The line `[ thread_group | _ ]` takes the head of the list and assigns it to `thread_group`. The rest of the list is discarded since I'm using the `_` operator. I have my thread group structure ready to get kicked off. The function `launch_threads` is responsible for this. An amazing feature of elixir is how you can use pattern matching in function arguments. I'm expecting a map with the following keys: `{ "repetitions" =>, "requests" =>, "threads" => }`. The declaration above assigns each value to the variable declared in the function signature. Moreover, the `param` variable is assigned the whole map value. Now, I have 10 threads to start. In an imperative language, I could loop 10 times and start background threads. In this context, I will use recursion 10 times. Using the `case` statement, I can inspect the value of `threads`. If it's at 0, my loop is finished and I can output a message to the console. For other values, I'm starting a `Task` using [HTTPSender](http://philibertd.com/2016/07/02/load-testing.html) defined in last week's post. We see here, `launch_request` is not currently implemented. It will be in the next iteration. I now want to launch the following threads. I'm calling the same method, decrementing `threads` value by 1 to not loop infinitely. Note the syntax, `%{ param | "threads" => threads - 1}`. This creates a new map, having all of `param` values except for `"threads"`.
+We introduced quite a lot of code here, let's go through it. Right now, I only want to worry about the first element of the `Elt` list. The line `[ thread_group | _ ]` takes the head of the list and assigns it to `thread_group`. The rest of the list is discarded since I'm using the `_` operator.
+
+I have my thread group structure ready to get kicked off. The function `launch_threads` is responsible for this. An amazing feature of elixir is how you can use pattern matching in function arguments. I'm expecting a map with the following keys: `{ "repetitions" =>, "requests" =>, "threads" => }`. The declaration above assigns each value to the variable declared in the function signature. Moreover, the `param` variable is assigned the whole map value.
+
+Now, I have 10 threads to start. In an imperative language, I could loop 10 times and start background threads. In this context, I will use recursion 10 times. Using the `case` statement, I can inspect the value of `threads`. If it's at 0, my loop is finished and I can output a message to the console. For other values, I'm starting a `Task` using [HTTPSender](http://philibertd.com/2016/07/02/load-testing.html) defined in last week's post. We see here, `launch_request` is not currently implemented. It will be in the next iteration so no need to worry about for now.
+
+Time to launch the following threads. I'm calling the same method, decrementing `threads` value by 1 to not loop infinitely. Note the syntax, `%{ param | "threads" => threads - 1}`. This creates a new map, having all of `param` values except for `"threads"`.
 
 #### Launching Requests
 
