@@ -3,7 +3,7 @@ layout: post
 ---
 ## Parsing JSON and sending requests
 
-*July 10th, 2016*
+*July 9th, 2016*
 
 This week I focused on getting a minimal test plan defined in JSON and executing it. Defining the plan wasn't too hard, I took a trimmed down version of [Golt's plan](https://github.com/dudang/golt/blob/master/test/golt-test.json). The light version looks like [this](https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/elt-test.json). This test will start 10 threads. Each of them will execute 3 GET requests to my blog. Simple enough, let the hacking begin.
 
