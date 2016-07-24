@@ -73,7 +73,7 @@
 </pre></noscript>
 <script src="https://gist.github.com/1df360053e0a3cba5643ecf5516cdc86.js"> </script>
 
-<p>So we have a module <code class="highlighter-rouge">Runner</code> which will be acting as the entry point for our program. For now, <code class="highlighter-rouge">get_struct</code> is a function which reads the file “elt-test.json”. It then transform the content into the <code class="highlighter-rouge">Elt</code> struct defined <a href="https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/lib/elt.ex">here</a>. Nothing too tricky. Now I want to start launching the threads. Each of these threads will launch their own series of requests.</p>
+<p>So we have a module <code class="highlighter-rouge">Runner</code> which will be acting as the entry point for our program. The new function <code class="highlighter-rouge">get_struct</code> reads the file “elt-test.json”. It then transform the content into the <code class="highlighter-rouge">Elt</code> struct defined <a href="https://github.com/PhilibertDugas/elixir-learning/blob/master/multithread/lib/elt.ex">here</a>. Nothing too tricky. Time to start launching the threads. Each of these threads will launch their own series of requests.</p>
 
 <h4 id="launching-threads">Launching Threads</h4>
 
@@ -87,7 +87,7 @@
 
 <p>Now, I have 10 threads to start. In an imperative language, I could loop 10 times and start background threads. In this context, I will use recursion 10 times. Using the <code class="highlighter-rouge">case</code> statement, I can inspect the value of <code class="highlighter-rouge">threads</code>. If it’s at 0, my loop is finished and I can output a message to the console. For other values, I’m starting a <code class="highlighter-rouge">Task</code> using <a href="http://philibertd.com/2016/07/02/load-testing.html">HTTPSender</a> defined in last week’s post. We see here, <code class="highlighter-rouge">launch_request</code> is not currently implemented. It will be in the next iteration so no need to worry about for now.</p>
 
-<p>Time to launch the following threads. I’m calling the same method, decrementing <code class="highlighter-rouge">threads</code> value by 1 to not loop infinitely. Note the syntax, <code class="highlighter-rouge">%{ param | "threads" =&gt; threads - 1}</code>. This creates a new map, having all of <code class="highlighter-rouge">param</code> values except for <code class="highlighter-rouge">"threads"</code>.</p>
+<p>Back to launching the following threads. I’m calling the same method, decrementing <code class="highlighter-rouge">threads</code> value by 1 to avoid looping infinitely. Note the syntax, <code class="highlighter-rouge">%{ param | "threads" =&gt; threads - 1}</code>. This creates a new map, having all of <code class="highlighter-rouge">param</code> values except for <code class="highlighter-rouge">"threads"</code>.</p>
 
 <h4 id="launching-requests">Launching Requests</h4>
 
@@ -145,13 +145,14 @@
 <span class="k">end</span>
 <span class="k">end</span>
 <span class="k">end</span>
-<span class="k">end</span></code></pre></figure>
+<span class="k">end</span>
+<span class="o">.........</span></code></pre></figure>
 
-<p>The output is quite clear. First it finishes booting all the threads. Then it finishes sending all the requests. Since they are asynchronous, we don’t get the result right away. Once the requests are done, we start receiving the <code class="highlighter-rouge">AsyncHeader</code>, <code class="highlighter-rouge">AsyncChunk</code>, and <code class="highlighter-rouge">AsyncEnd</code> structs from HTTPotion. Some requests seem a bit slower then others. Note the <code class="highlighter-rouge">AsyncHeader</code> that arrived after 3 <code class="highlighter-rouge">AsyncChunk</code>. With a longer running test (more requests), we would probably see much more of them.</p>
+<p>The output is super interesting. First it finishes booting all the threads. Then it finishes sending all the requests. Since they are asynchronous, we don’t get the result right away. Once the requests are done, we start receiving the <code class="highlighter-rouge">AsyncHeader</code>, <code class="highlighter-rouge">AsyncChunk</code>, and <code class="highlighter-rouge">AsyncEnd</code> structs from HTTPotion. Some requests seem a bit slower then others. Note the <code class="highlighter-rouge">AsyncHeader</code> that arrived after 3 <code class="highlighter-rouge">AsyncChunk</code>. With a longer running test (more requests), we would probably see much more of them. I trimmed down the output to the first 10 requests to maintain readability. In your own console, you would see this output keeps going for all 30 requests.</p>
 
 <h4 id="conclusion">Conclusion</h4>
 
-<p>This first step was for the simplest scenario. Still, I’m super impressed by the power of Elixir. In around 33 lines of code, we can get a command line load testing tool. Elt is very limited, in the upcoming weeks I plan to keep exploring and learning Elixir through this project. One thing I want to approach soon is Elixir testing, logging and eventually the <a href="http://www.phoenixframework.org/">Phoenix framework</a>.</p>
+<p>This first step was for the simplest scenario. Still, I’m super impressed by the power of Elixir. In around 33 lines of code, we can get a command line load testing tool. While Elt is still limited, I plan to keep exploring and learning Elixir through this project. One thing I want to approach soon is Elixir testing, logging and eventually the <a href="http://www.phoenixframework.org/">Phoenix framework</a>.</p>
 
 </article>
 

@@ -11,8 +11,9 @@
   margin-bottom: 0.5em;
 }
 
-.content li {
-  border-bottom: 1px solid #eee
+.posts li {
+  border-bottom: 1px solid #eee;
+  list-style: none;
 }
 
 .profile #avatar {
@@ -34,10 +35,6 @@ h1 {
 h2 {
   color: #aaa;
   font-size: 3.0rem;
-}
-
-li {
-  list-style: none;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 500px) {
