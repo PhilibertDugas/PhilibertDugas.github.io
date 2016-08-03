@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Tracking Test Lifetime - Philibert&#8217;s website</title>
+<meta property="og:title" content="Tracking Test Lifetime" />
+<meta name="description" content="Rethinking the load test" />
+<meta property="og:description" content="Rethinking the load test" />
+<meta property="og:site_name" content="Philibert’s website" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-08-02T00:00:00-04:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Tracking Test Lifetime",
+    "datePublished": "2016-08-02T00:00:00-04:00",
+    "description": "Rethinking the load test",
+    "url": "/2016/08/02/tracking-test-lifetime.html"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Philibert Dugas, Philibertd">
+    <meta name="author" content="Philibert Dugas">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/static/css/skeleton.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76867217-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+  <div class="row">
+    <div class="profile three columns">
+      <a href="/"><img id="avatar" src="/static/images/phili.png" alt="avatar"/></a>
+      <ul id="social">
+        <li>
+          <a href="https://ca.linkedin.com/in/philibertdugas" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+        </li>
+        <li>
+          <a href="https://github.com/PhilibertDugas" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+        </li>
+        <li>
+          <a href="https://twitter.com/DugasPhilibert" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+      <h2>Philibert Dugas</h2>
+      <h6>Developer <a href="https://www.shopify.ca/">@Shopify</a>, software enthusiast</h6>
+    </div>
+    <div class="nine columns content">
+      <article>
+  <h2 id="rethinking-the-load-test">Rethinking the load test</h2>
+
+<p><em>August 2nd, 2016</em></p>
+
+<p>Over the past few weeks, I’ve developed a routine in the weekends. Every Saturday, I spend around 2-3 hours coding some elixir. If it’s not too late, I’ll write my blog post about the coding session. Worst case scenario, I write the blog post on Sunday.</p>
+
+<p>This week, I wanted to migrate my previous code into an Phoenix project and build a web page out of it. The first iteration is simple. Go to the web page, click a button to start a load test, then see results when the test is over. <strong>When the test is over</strong>. That’s not something the current implementation was tackling.</p>
+
+<p>I had to halt on the Phoenix migration for this weekend and revisit my current code. The first step was to refactor the <code class="highlighter-rouge">HTTPSender</code> which had the wrong implementation. The second step was to detect when the test is done.</p>
+
+<h4 id="refactoring-httpsender">Refactoring HTTPSender</h4>
+
+<p>In the previous weeks, the <code class="highlighter-rouge">HTTPSender</code> was always sending asynchronous requests. Looking back, it makes no sense. If we have 10 threads which are expected to each do 10 http requests, we want those requests to be sequential. By putting those requests asynchronous, we are actually launching 100 threads. Each of these 100 threads are then executing 1 HTTP request. Furthermore, the criteria of completion for a thread is that it’s requests are done. Making those requests sequential is going to simplify the code.</p>
+
+<p>Another thing I wanted to tackle was the request execution time. Erlang has a great function built to calculate the execution time of a function. This is exactly what I use in the snippet below.</p>
+
+<noscript><pre>400: Invalid request
+</pre></noscript>
+<script src="https://gist.github.com/3d1195ee77c28c3826e5de168ade1d1e.js"> </script>
+
+<p>Few changes from last week. First we deal with any kind of methods now. HTTPotion expects a downcased atom version of the method to send. Since Poison returns string keys (and not atom keys) I have a little bit of casting to do.</p>
+
+<p>Second, <a href="http://erlang.org/doc/man/timer.html#tc-1">:timer.tc</a> calculates to execution time of the HTTP request. I love how it returns a <code class="highlighter-rouge"><span class="p">{</span><span class="err">Time,</span><span class="w"> </span><span class="err">Value</span><span class="p">}</span></code> format. It’s much cleaner than wrapping the function with timestamps and subtracting them afterward. Since the time value is in nanoseconds, I divide by a factor of 1000 to log a millisecond value. Milliseconds are more appropriate for HTTP requests.</p>
+
+<h4 id="waiting-for-tasks">Waiting for tasks</h4>
+
+<p>Now that we dealt with the easy stuff, time for some asynchronous fun. First of, I was using mostly <code class="highlighter-rouge">Task.start</code> in my previous code. Reading the <a href="http://elixir-lang.org/docs/stable/elixir/Task.html#summary">Elixir documentation</a>, I noticed that <code class="highlighter-rouge">Task.async</code> was the alternative when a task must be awaited on.</p>
+
+<p>Second, I have many tasks running (1 task by thread) so I need to wait for many tasks at once. Good thing <code class="highlighter-rouge">Task.yield_many</code> is there for me.</p>
+
+<p>Finally, I have to keep all those tasks in a list so that I can await on this list when needed. There are different ways to keep a state in Elixir and I opted for the easiest one in my opinion. Sending the list of tasks as an argument in the function allows me to await on these tasks when needed.</p>
+
+<noscript><pre>400: Invalid request
+</pre></noscript>
+<script src="https://gist.github.com/10c3eff44cbf287515a76ad2fbb7adfc.js"> </script>
+
+<p>The first argument is the thread group. This group defines how many threads to launch, the request information and it’s repetitions.</p>
+
+<p>The second argument is the list of tasks to be awaited on. These tasks represent launched threads in the context of the load test.</p>
+
+<p>Every time we launch a thread, we use the <code class="highlighter-rouge">Task.async</code> function. On every iteration, we insert this task into the <code class="highlighter-rouge">tasks</code> argument by using the <code class="highlighter-rouge">List.insert_at(tasks, 0, task)</code> function. When the thread count is down to 0, we finished launching all the thread. We are then ready to wait for their completion. <code class="highlighter-rouge">Task.yield_many(tasks, 30000)</code> will wait until every tasks are done up to a maximum of 30 seconds. This hardcoded value of 30 seconds is definitely something to change but it allowed me to test the code.</p>
+
+<p>There we have it, this current code launches many threads. Each threads will execute a many sequential HTTP requests. The main code will wait until every thread is done which would indicate the end of the load test.</p>
+
+<h4 id="whats-next">What’s next</h4>
+
+<p>Now that I can detect when a test is finished, we can store the results in a database and show it with Phoenix. Next week, I’ll be going through my first Phoenix project to launch basic load tests.</p>
+
+<p>There’s still a lot of ground to cover, I haven’t been exploring unit testing at all so far. I’d love also to use <a href="http://www.phoenixframework.org/docs/channels">Phoenix channels</a> to display live stats of a current running load tests. Stay tuned in the upcoming weeks as I tackle all these areas.</p>
+
+</article>
+
+<p>You can find me on Twitter <a href="https://twitter.com/DugasPhilibert">@DugasPhilibert</a></p>
+
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>
