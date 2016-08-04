@@ -1,0 +1,69 @@
+==================================================================
+https://keybase.io/philibertdugas
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://philibertd.com
+  * I am philibertdugas (https://keybase.io/philibertdugas) on keybase.
+  * I have a public key with fingerprint EE16 8769 1E08 546D B10C  48C7 E32A CB70 B9B0 ECBA
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101ee7a54340b8c65e9c3fde6b13b560763949e29c26f34ac8f04a941c7edddeb6e0a",
+            "fingerprint": "ee1687691e08546db10c48c7e32acb70b9b0ecba",
+            "host": "keybase.io",
+            "key_id": "e32acb70b9b0ecba",
+            "kid": "0101ee7a54340b8c65e9c3fde6b13b560763949e29c26f34ac8f04a941c7edddeb6e0a",
+            "uid": "f7765be90faffb99a83f25358c8f1919",
+            "username": "philibertdugas"
+        },
+        "service": {
+            "hostname": "philibertd.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1470234009,
+    "expire_in": 157680000,
+    "prev": "749153a8f9eb58e5d6e51c5721dad85d77b19183594a2120a0e86946b82c40fd",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.53
+Comment: https://keybase.io/crypto
+
+yMIqAnicrVJbSBRRGN6tLJVKKc3MKJiu0iJnLmdmziZE2JWwsh4qsrZzZs6s4647
+28yomVlPmfUSQVciTWolMirIpIfoYlFSlCkIhUVlWE/2IKJB1nZG6qkeOy+Hc/7v
++/7v+/kfT5voS/ejKf0Dh86MBvzPHzZW+rY1/zhXyxFLr+GCtVyEjl80qlPHDUVM
+nQtygAc8pQqGkigBomoypEgTDZ3KhBcJlIEii0hCVECaIBuihDXVABJGEq8pVNd1
+SmQKMBfgDDMWpnbcNmMuk6WUl1VFRjwFKpRknfBAk1RGEQWsEQUQRADViEcssxyP
+wcwR7NAC02J/7BEat/cP/H/2XTkuZyiKDAlFwMCGQRDCqmgIUIQqo/GIRx7QoXYM
+V1CGjpeZUZNQ29Urw9jh6gIcq1WZGvXG6+X5C1egWRVMI25brqVZUVYrc9140KO6
+NXEPW01J6LdKiJgxnY2TEaqo7ZhWjAvyDKm5pifLSwoQWGqAAhzdFzdtGjI9BFRk
+FbDjtaFVTFKREA9FrBqIEqhSqMsU8hpUBF7Hugp1RSEsmypCJGGBFwAGVJWRJBNV
+0CRg6JyXa2/M4oISs4nDTNIxwzHsVtqUq+t4UDrJ50/3TU6Z4K2ZLz0t88/yrXg6
+Jbm1Pqal9WcWtabNT2QGEq+GcuDQ4QVb7hcnD07PwCOnn70ZHGuKOG8bUxfB0dFE
+97ntzSMFY/nVHQ/aBlPXzb3Rl3F13uf265H3X5oGCzs25CmPVrXUTei9efH4sure
+gtkvjZKPDcuz53yZ+STbWr31c9fd8LdDYvexPVm9OfmlmyMzks15t52jvW2bNxbu
+T8YD0QMlWQt3nSSvzcUf11T4z9wLrs8aXll89uu0Ty+Gc7W2Tvf82iM9Ne230j/8
+jM4qSvTLrW9Wn9i080qN9b3n0q1kyw57cMm7RE7D7lO5U/s623akDsSv9TzsOnt5
+YL1UntK+sOXylQv+3KX15db2/DvvTju/AEOmSg0=
+=WlNi
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/philibertdugas
+
+==================================================================
+
