@@ -131,4 +131,4 @@ Once the test is over, we retrieve the results with `List.Bucket.get_all`. Clean
 
 It's a wrap for this week. Here's what the final product looks like. Still a lot of work to be done, but it's doing the job for now :)
 
-{% youtube SkoJg3qfGyI %}
+[![Elt load test](http://img.youtube.com/vi/SkoJg3qfGyI/0.jpg)](https://www.youtube.com/watch?v=SkoJg3qfGyI&feature=em-upload_owner)
