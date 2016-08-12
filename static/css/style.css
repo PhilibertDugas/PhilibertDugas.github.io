@@ -3,6 +3,11 @@
  size: 1.2em;
 }
 
+.profile svg {
+  width: 32px;
+  height: 32px;
+}
+
 .post-link {
   text-decoration: none;
 }
@@ -22,10 +27,6 @@
 
 ul#social li {
   display: inline;
-}
-
-ul#social i {
-  font-size: 40px;
 }
 
 h1 {
@@ -52,8 +53,9 @@ h2 {
     font-size: 2.5rem;
   }
 
-  ul#social i {
-    font-size: 5vw;
+  .profile svg {
+    height: 64px;
+    width: 64px;
   }
 
   .profile #avatar {
