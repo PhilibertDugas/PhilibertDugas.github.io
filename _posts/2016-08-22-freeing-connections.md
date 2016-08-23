@@ -1,7 +1,7 @@
 ---
 layout: post
 ---
-## Background job
+## Freeing connections
 
 *August 22nd, 2016*
 
