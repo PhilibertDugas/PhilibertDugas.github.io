@@ -1,7 +1,7 @@
 ---
 layout: post
 ---
-## Freeing connections
+## Releasing server connections
 
 *August 22nd, 2016*
 
