@@ -1,6 +1,5 @@
 html {
   background-image: url('/static/images/background.jpg');
-  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -17,17 +16,8 @@ a {
   width: 120px;
 }
 
-.banner {
-  width: 100%;
-}
-
 ul#social li {
   display: inline;
-}
-
-svg {
-  width: 64px;
-  height: 64px;
 }
 
 svg path {
@@ -38,13 +28,10 @@ svg:hover path {
   fill: #9dd89f;
 }
 
-h1 {
-  font-size: 4.0rem;
-}
-
 @media only screen and (min-device-width: 501px) {
-  h2 {
-    font-size: 3.0rem;
+  svg {
+    width: 64px;
+    height: 64px;
   }
 
   .content {
@@ -55,15 +42,15 @@ h1 {
 @media only screen and (min-device-width: 320px) and (max-device-width: 500px) {
   .content {
     width: 100%!important;
-    margin-top: 50px;
+    margin-top: 300px;
+  }
+
+  svg {
+    width: 128px;
+    height: 128px;
   }
 
   .content #avatar {
-    width: 150px;
+    width: 250px;
   }
-
-  h6 {
-    font-size: 2.5rem;
-  }
-
 }
